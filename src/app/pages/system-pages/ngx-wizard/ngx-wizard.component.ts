@@ -12,7 +12,7 @@ export class NGXFormWizardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.router.navigate(['/register-wizard/wizard'], { skipLocationChange: true });
+        this.router.navigate(['/register-wizard/personal'], { skipLocationChange: true });
     }
 
 }

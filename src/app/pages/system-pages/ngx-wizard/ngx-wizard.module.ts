@@ -18,10 +18,13 @@ import { FormDataService } from './data/formData.service';
 import { WorkflowService } from './workflow/workflow.service';
 import { CommonModule } from '@angular/common';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
     imports: [CommonModule,
         FormsModule,
+        NgbModule.forRoot(),
         NGXWizardRoutingModule
     ],
     providers: [{ provide: FormDataService, useClass: FormDataService },

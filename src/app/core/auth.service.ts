@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireModule } from 'angularfire2';
 
-// import { ToastrService } from '../components/extra/toastr/toastr.service'
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
- import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
 export class User {
     public emailVerified: boolean;

@@ -4,45 +4,65 @@ import { FormData, Personal, Address } from './formData.model';
 import { WorkflowService } from '../workflow/workflow.service';
 import { STEPS } from '../workflow/workflow.model';
 
+import { Observable } from 'rxjs/Observable';
+
+// Auth Service
+import { AuthService } from '../../../../core/auth.service';
+
+// data base Service
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+
 @Injectable()
 export class FormDataService {
 
     private formData: FormData = new FormData();
-    private isPersonalFormValid: boolean = false;
-    private isWorkFormValid: boolean = false;
-    private isAddressFormValid: boolean = false;
+    private isPersonalFormValid = false;
+    private isWorkFormValid = false;
+    private isAddressFormValid = false;
 
-    constructor(private workflowService: WorkflowService) {
-    }
-    //Get Personal Tab Data
-    getPersonal(): Personal {
-        // Return the Personal data
-        var personal: Personal = {
-            firstName: this.formData.firstName,
-            lastName: this.formData.lastName,
-            email: this.formData.email
-        };
-        return personal;
+    private personal: Personal = {
+      firstName: this.formData.firstName,
+      lastName: this.formData.lastName,
+      genre: this.formData.genre,
+      birthdate: this.formData.birthdate
+    };
+
+    // public personal: Observable<Personal>;
+
+    private itemDoc: AngularFirestoreDocument<Personal>;
+    private crewnie: Observable<Personal>;
+
+    constructor(
+      private workflowService: WorkflowService,
+      private acAuth: AuthService,  // Angular Crewnie Authentication
+      private afs: AngularFirestore,
+    ) {}
+
+    // Get Personal Tab Data
+    getPersonal(): any {
+      return this.personal;
     }
 
-    //Set Personal Tab Data
+    // Set Personal Tab Data
     setPersonal(data: Personal) {
         // Update the Personal data only when the Personal Form had been validated successfully
         this.isPersonalFormValid = true;
         this.formData.firstName = data.firstName;
         this.formData.lastName = data.lastName;
-        this.formData.email = data.email;
+        this.formData.genre = data.genre;
+        this.formData.birthdate = data.birthdate;
         // Validate Personal Step in Workflow
         this.workflowService.validateStep(STEPS.personal);
     }
 
-    //Get Work Tab Data
+    // Get Work Tab Data
     getWork(): string {
         // Return the work type
         return this.formData.work;
     }
 
-    //Set Work Tab Data
+    // Set Work Tab Data
     setWork(data: string) {
         // Update the work type only when the Work Form had been validated successfully
         this.isWorkFormValid = true;
@@ -51,10 +71,10 @@ export class FormDataService {
         this.workflowService.validateStep(STEPS.work);
     }
 
-    //Get Address Tab Data
+    // Get Address Tab Data
     getAddress(): Address {
         // Return the Address data
-        var address: Address = {
+        const address: Address = {
             street: this.formData.street,
             city: this.formData.city,
             state: this.formData.state,
@@ -62,8 +82,8 @@ export class FormDataService {
         };
         return address;
     }
-    
-    //Set Address Tab Data
+
+    // Set Address Tab Data
     setAddress(data: Address) {
         // Update the Address data only when the Address Form had been validated successfully
         this.isAddressFormValid = true;

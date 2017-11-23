@@ -16,17 +16,10 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'wizard',
+        path: 'personal',
         component: PersonalComponent,
         data: {
           title: 'Personal'
-        }
-      },
-      {
-        path: 'work',
-        component: WorkComponent,
-        data: {
-          title: 'Work'
         }
       },
       {
@@ -34,6 +27,13 @@ const routes: Routes = [
         component: AddressComponent,
         data: {
           title: 'Address'
+        }
+      },
+      {
+        path: 'work',
+        component: WorkComponent,
+        data: {
+          title: 'Work'
         }
       },
       {
